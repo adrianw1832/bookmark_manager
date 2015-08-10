@@ -1,3 +1,6 @@
+require_relative '../../data_mapper_setup'
+require 'spec_helper'
+
 feature 'Viewing Links' do
   scenario 'I can see existing links on the links page' do
     Link.new(url: 'http://www.makersacademy.com', title: 'Makers Academy')
