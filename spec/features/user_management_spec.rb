@@ -56,3 +56,38 @@ feature 'User signs out' do
     expect(page).not_to have_content('Welcome, test@test.com')
   end
 end
+
+feature 'Password reset' do
+  before(:each) do
+    User.create(email: 'test@test.com', password: 'secret1234',
+                password_confirmation: 'secret1234')
+  end
+
+  scenario 'requesting a password reset' do
+    visit '/users/password_reset'
+    user = User.first
+    fill_in 'email', with: user.email
+    click_button 'Reset password'
+    user = User.first(email: user.email)
+    expect(user.password_token).not_to be_nil
+    expect(page).to have_content 'Check your emails'
+  end
+
+  xscenario 'resetting password' do
+    user = User.first
+    user.password_token = 'token'
+    user.save
+    visit "/users/password_reset/#{user.password_token}"
+    expect(page.status_code).to eq 200
+    expect(page).to have_content 'Enter a new password'
+  end
+
+  xscenario 'user can reset their password' do
+    user = User.first
+    user.password_token = 'token'
+    user.save
+    visit "/users/password_reset/#{user.password_token}"
+    fill_in 'new_password', with: 'new_password'
+    expect(user.password).to eq 'new_password'
+  end
+end

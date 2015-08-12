@@ -6,9 +6,10 @@ class User
   include DataMapper::Resource
 
   property :id, Serial
-  property :email, String
-  property :password_digest, Text
   property :email, String, required: true
+  property :password_digest, Text
+  property :password_token, Text
+  has n, :links, through: Resource
 
   validates_confirmation_of :password
   validates_uniqueness_of :email
