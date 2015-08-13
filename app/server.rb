@@ -3,21 +3,18 @@ require 'sinatra/flash'
 require 'sinatra/partial'
 
 require_relative 'data_mapper_setup'
-require_relative 'controllers/init'
 require_relative 'helpers/app_helper'
+require_relative 'controllers/base'
+require_relative 'controllers/init'
 
-class BookmarkManager < Sinatra::Base
-  set :views, proc { File.join(root, '..', 'views') }
-  set :public_folder, proc { File.join(root, '../..', 'public') }
-  enable :sessions
-  set :session_secret, 'super secret'
-  register Sinatra::Flash
-  use Rack::MethodOverride
-
-  include ApplicationHelpers
-
-  configure do
-    register Sinatra::Partial
-    set :partial_template_engine, :erb
+module BookmarkManager
+  class MyApp < Sinatra::Base
+    use Routes::Links
+    use Routes::Mainpage
+    use Routes::PasswordReset
+    use Routes::RequestPasswordReset
+    use Routes::Signin
+    use Routes::Signup
+    use Routes::Tags
   end
 end

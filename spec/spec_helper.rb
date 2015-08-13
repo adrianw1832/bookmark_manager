@@ -9,7 +9,7 @@ require 'database_cleaner'
 require_relative 'helpers/session'
 require_relative '../app/server.rb'
 
-Capybara.app = BookmarkManager
+Capybara.app = BookmarkManager::MyApp
 
 RSpec.configure do |config|
   config.include SessionHelpers

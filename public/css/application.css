@@ -2,7 +2,7 @@ body {
   font-family: Helvetica, Arial, Sans-serif;
 }
 
-a.button {
+.button {
   display: inline-block; /* display inline but have dimensions */
   width: 100px;
   background-color: #82B743;
