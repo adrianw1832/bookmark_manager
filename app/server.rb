@@ -3,8 +3,8 @@ require 'sinatra/flash'
 require 'sinatra/partial'
 
 require_relative 'data_mapper_setup'
-require_relative './controllers/init'
-require_relative './helpers/app_helper'
+require_relative 'controllers/init'
+require_relative 'helpers/app_helper'
 
 class BookmarkManager < Sinatra::Base
   set :views, proc { File.join(root, '..', 'views') }

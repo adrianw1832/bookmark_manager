@@ -1,7 +1,7 @@
 module SessionHelpers
   def sign_in(email:, password:)
     visit '/'
-    click_button('Sign in')
+    click_link('Sign in')
     fill_in :email, with: email
     fill_in :password, with: password
     click_button 'Sign in'
@@ -9,7 +9,7 @@ module SessionHelpers
 
   def sign_up_as(user)
     visit '/'
-    click_button('Sign up')
+    click_link('Sign up')
     fill_in :email, with: user.email
     fill_in :password, with: user.password
     fill_in :password_confirmation, with: user.password_confirmation

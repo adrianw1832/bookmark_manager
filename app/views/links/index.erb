@@ -1,17 +1,9 @@
 <h1>Welcome to bookmark manager</h1>
 
-<% if !current_user %>
-  <form action="users/new">
-    <input type="submit" value="Sign up" id="sign-up" />
-  </form>
-  <form action="sessions/new">
-    <input type="submit" value="Sign in" id="sign-in" />
-  </form>
-<% end %>
 
-<p>Current links:</p>
 <ul id="links">
   <%if current_user %>
+  <p>Current links:</p>
     <% @current_user.links.each do |link| %>
       <li>
         Title: <%= link.title %>

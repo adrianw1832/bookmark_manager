@@ -4,7 +4,7 @@ body {
 
 a.button {
   display: inline-block; /* display inline but have dimensions */
-  width: 80px;
+  width: 100px;
   background-color: #82B743;
   border: 2px solid white;
   color: white; /*text colour*/
@@ -22,7 +22,7 @@ header {
   background-color: black;
   color: white;
   display: flex; /* http://learnlayout.com/flexbox.html */
-  padding: 0 20px;
+  padding: 10px 20px;
 }
 
   /* every immediate child to be vertically centered */

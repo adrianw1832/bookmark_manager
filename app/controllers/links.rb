@@ -5,10 +5,10 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/links' do
-    link = Link.create(url: params[:url], title: params[:title])
-    tag_list = params[:tags].split
-    tag_list.each { |tag| link.tags << Tag.create(name: tag) }
     if current_user
+      link = Link.create(url: params[:url], title: params[:title])
+      tag_list = params[:tags].split
+      tag_list.each { |tag| link.tags << Tag.create(name: tag) }
       @current_user.links << link
       @current_user.save
     else
