@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'Viewing Links' do
   scenario 'I can filter links by tag' do
     user = User.new(user_params)

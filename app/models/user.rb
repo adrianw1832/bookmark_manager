@@ -1,7 +1,7 @@
 require 'bcrypt'
 
-# module BookmarkManager
-#   module Models
+module BookmarkManager
+  module Models
     class User
       attr_reader :password
       attr_accessor :password_confirmation
@@ -26,5 +26,5 @@ require 'bcrypt'
         user && BCrypt::Password.new(user.password_digest) == password ? user : nil
       end
     end
-#   end
-# end
+  end
+end

@@ -1,5 +1,5 @@
-# module BookmarkManager
-#   module Models
+module BookmarkManager
+  module Models
     class Link
       include DataMapper::Resource
 
@@ -8,5 +8,5 @@
       property :url, String
       has n, :tags, through: Resource
     end
-#   end
-# end
+  end
+end

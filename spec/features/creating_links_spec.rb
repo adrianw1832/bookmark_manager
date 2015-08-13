@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'Creating links' do
   let(:user) { User.new(user_params) }
 

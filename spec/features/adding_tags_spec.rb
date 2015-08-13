@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature 'Adding tags' do
   let(:user) { User.new(user_params) }
 

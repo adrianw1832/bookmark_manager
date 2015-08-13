@@ -6,4 +6,8 @@ module ApplicationHelpers
   def rand_token
     [*'A'..'Z'].shuffle.join
   end
+
+  def token?
+    User.first(password_token: session[:token])
+  end
 end

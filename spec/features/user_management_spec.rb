@@ -1,5 +1,3 @@
-require 'byebug'
-
 feature 'User sign up' do
   scenario 'I can sign up as a new user' do
     user = User.new(user_params)
@@ -84,16 +82,28 @@ feature 'Password reset' do
     expect(page).to have_content 'Enter a new password'
   end
 
-  scenario 'password gets changed when users reset their password' do
+  scenario 'user can use new password after user resets the password' do
     user = User.first
     user.update(password_token: 'token')
-    old_digest = user.password_digest
     visit "/users/password_reset/#{user.password_token}"
     fill_in 'password', with: 'new password'
     fill_in 'password_confirmation', with: 'new password'
     click_button 'Update password'
+    click_button('Sign out')
+    sign_in(email: user.email, password: 'new password')
+    expect(page).to have_content "Welcome, #{user.email}"
+  end
+
+  scenario 'user cannot use new password after user resets the password' do
     user = User.first
-    expect(user.password_digest).not_to eq old_digest
+    user.update(password_token: 'token')
+    visit "/users/password_reset/#{user.password_token}"
+    fill_in 'password', with: 'new password'
+    fill_in 'password_confirmation', with: 'new password'
+    click_button 'Update password'
+    click_button('Sign out')
+    sign_in(email: user.email, password: 'secret1234')
+    expect(page).not_to have_content "Welcome, #{user.email}"
   end
 
   scenario 'token is deleted after users reset their password' do
@@ -103,8 +113,8 @@ feature 'Password reset' do
     fill_in('password', with: 'new password')
     fill_in('password_confirmation', with: 'new password')
     click_button('Update password')
-    user = User.first
-    expect(user.password_token).to eq nil
+    visit "/users/password_reset/#{user.password_token}"
+    expect(page).not_to have_content 'New Password'
   end
 
   scenario 'user resets with a password that does not match' do
