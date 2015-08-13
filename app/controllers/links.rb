@@ -12,7 +12,7 @@ class BookmarkManager < Sinatra::Base
       @current_user.links << link
       @current_user.save
     else
-      link.save
+      flash[:notice] = 'Please sign up or sign in first!'
     end
     redirect '/links'
   end

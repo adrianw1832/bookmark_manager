@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 feature 'Adding tags' do
+  let(:user) { User.new(user_params) }
+
   scenario 'I can add multiple tags to a new link' do
+    sign_up_as(user)
     visit '/links/new'
     fill_in 'url', with: 'http://www.makersacademy.com/'
     fill_in 'title', with: 'Makers Academy'

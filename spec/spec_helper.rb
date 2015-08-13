@@ -7,7 +7,7 @@ require 'capybara/rspec'
 require 'rspec'
 require 'database_cleaner'
 require_relative 'helpers/session'
-require_relative '../app/bookmark_manager_web.rb'
+require_relative '../app/server.rb'
 
 Capybara.app = BookmarkManager
 

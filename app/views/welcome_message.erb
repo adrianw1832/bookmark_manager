@@ -1,7 +1,19 @@
-<% if current_user %>
-  <p>Welcome, <%= current_user.email %></p>
-  <form action="/sessions" method="post">
-    <input type="hidden" name="_method" value="delete" />
-    <input type="submit" value="Sign out" />
-  </form>
-<% end %>
+<header>
+  <div id="logo">Bookmark Manager</div>
+  <div id="user-links">
+    <% if current_user %>
+      <span id="welcome_message">
+        <p>Welcome, <%= current_user.email %></p>
+      </span>
+
+      <form id="sign-out" action="/sessions" method="post">
+        <input type="hidden" name="_method" value="delete" />
+        <input type="submit" value="Sign out" />
+      </form>
+    <% end %>
+  </div>
+</header>
+
+
+
+

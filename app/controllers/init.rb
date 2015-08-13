@@ -1,6 +1,7 @@
 require_relative 'links'
 require_relative 'mainpage'
 require_relative 'password_reset'
+require_relative 'request_password_reset'
 require_relative 'signin'
 require_relative 'signup'
 require_relative 'tag'

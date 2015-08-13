@@ -1,3 +1,5 @@
+require 'byebug'
+
 feature 'User sign up' do
   scenario 'I can sign up as a new user' do
     user = User.new(user_params)
@@ -15,7 +17,7 @@ feature 'User sign up' do
     user = User.new(user_params_without_password)
     expect { sign_up_as(user) }.not_to change(User, :count)
     expect(current_path).to eq('/users')
-    expect(page).to have_content "Password does not match the confirmation"
+    expect(page).to have_content 'Password does not match the confirmation'
   end
 
   scenario 'I cannot sign up as a new user without an email' do
@@ -26,6 +28,7 @@ feature 'User sign up' do
   scenario 'I cannot sign up with an existing email' do
     user = User.new(user_params)
     sign_up_as(user)
+    click_button('Sign out')
     expect { sign_up_as(user) }.to change(User, :count).by(0)
     expect(page).to have_content('Email is already taken')
   end
@@ -64,7 +67,7 @@ feature 'Password reset' do
   end
 
   scenario 'requesting a password reset' do
-    visit '/users/password_reset'
+    visit '/users/request_password_reset'
     user = User.first
     fill_in 'email', with: user.email
     click_button 'Reset password'
@@ -73,21 +76,54 @@ feature 'Password reset' do
     expect(page).to have_content 'Check your emails'
   end
 
-  xscenario 'resetting password' do
+  scenario 'resetting password' do
     user = User.first
-    user.password_token = 'token'
-    user.save
+    user.update(password_token: 'token')
     visit "/users/password_reset/#{user.password_token}"
     expect(page.status_code).to eq 200
     expect(page).to have_content 'Enter a new password'
   end
 
-  xscenario 'user can reset their password' do
+  scenario 'password gets changed when users reset their password' do
     user = User.first
-    user.password_token = 'token'
-    user.save
+    user.update(password_token: 'token')
+    old_digest = user.password_digest
     visit "/users/password_reset/#{user.password_token}"
-    fill_in 'new_password', with: 'new_password'
-    expect(user.password).to eq 'new_password'
+    fill_in 'password', with: 'new password'
+    fill_in 'password_confirmation', with: 'new password'
+    click_button 'Update password'
+    user = User.first
+    expect(user.password_digest).not_to eq old_digest
+  end
+
+  scenario 'token is deleted after users reset their password' do
+    user = User.first
+    user.update(password_token: 'token')
+    visit "/users/password_reset/#{user.password_token}"
+    fill_in('password', with: 'new password')
+    fill_in('password_confirmation', with: 'new password')
+    click_button('Update password')
+    user = User.first
+    expect(user.password_token).to eq nil
+  end
+
+  scenario 'user resets with a password that does not match' do
+    user = User.first
+    user.update(password_token: 'token')
+    visit "/users/password_reset/#{user.password_token}"
+    fill_in('password', with: 'new password')
+    fill_in('password_confirmation', with: 'old password')
+    click_button('Update password')
+    expect(page).to have_content 'Password does not match the confirmation'
+  end
+
+  scenario 'user is taken to links loggen in after password reset'do
+    user = User.first
+    user.update(password_token: 'token')
+    visit "/users/password_reset/#{user.password_token}"
+    fill_in('password', with: 'new password')
+    fill_in('password_confirmation', with: 'new password')
+    click_button('Update password')
+    expect(page).to have_content("Welcome, #{user.email}")
   end
 end
