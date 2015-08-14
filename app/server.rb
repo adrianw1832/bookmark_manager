@@ -15,9 +15,7 @@ module BookmarkManager
     use Routes::Mainpage
     use Routes::Links
     use Routes::Tags
-    use Routes::Users::Signup
-    use Routes::Users::PasswordReset
-    use Routes::Users::RequestPasswordReset
-    use Routes::Sessions::Signin
+    use Routes::Users
+    use Routes::Sessions
   end
 end
