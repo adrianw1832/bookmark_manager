@@ -11,6 +11,7 @@ gem 'sinatra-flash'
 gem 'sinatra-partial'
 gem 'byebug'
 gem 'launchy'
+gem 'factory_girl'
 
 group :test do
   gem 'database_cleaner'

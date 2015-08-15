@@ -6,12 +6,17 @@ require 'capybara'
 require 'capybara/rspec'
 require 'rspec'
 require 'database_cleaner'
+require 'factory_girl'
 require_relative 'helpers/session'
 require_relative '../app/server.rb'
 
 Capybara.app = BookmarkManager::MyApp
 
 RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+  FactoryGirl.definition_file_paths = %w{./factories ./spec/factories}
+  FactoryGirl.find_definitions
+
   config.include SessionHelpers
 
   config.before(:suite) do

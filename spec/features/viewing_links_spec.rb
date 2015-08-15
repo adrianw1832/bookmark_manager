@@ -1,23 +1,15 @@
 feature 'Viewing Links' do
   scenario 'I can filter links by tag' do
-    user = User.new(user_params)
+    bubble_tag = create(:tag, name: 'bubbles')
+    non_bubble_tag = create(:tag)
+
+    user = build(:user)
     sign_up_as(user)
-    user.links << Link.create(url: 'http://www.makersacademy.com',
-                              title: 'Makers Academy',
-                              tags: [Tag.first_or_create(name: 'education')])
-    user.save
-    user.links << Link.create(url: 'http://www.google.com',
-                              title: 'Google',
-                              tags: [Tag.first_or_create(name: 'search')])
-    user.save
-    user.links << Link.create(url: 'http://www.zombo.com',
-                              title: 'This is Zombocom',
-                              tags: [Tag.first_or_create(name: 'bubbles')])
-    user.save
-    user.links << Link.create(url: 'http://www.bubble-bobble.com',
-                              title: 'Bubble Bobble',
-                              tags: [Tag.first_or_create(name: 'bubbles')])
-    user.save
+    create(:link, title: 'Bubble Bobble', tags: [bubble_tag])
+    create(:link, title: 'This is Zombocom', tags: [bubble_tag])
+    create(:link, title: 'Potatoland', tags: [non_bubble_tag])
+    create(:link, title: 'The Potato Rises', tags: [non_bubble_tag])
+
     visit '/tags/bubbles'
     within 'ul#links' do
       expect(page).not_to have_content('Makers Academy')
