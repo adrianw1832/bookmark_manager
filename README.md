@@ -23,7 +23,7 @@ RSpec, Capybara
 
 ##How to install
 
-Clone the repo and run rackup in the terminal. Visit localhost:9292 to run the
-bookmark manager.
+Clone the repo, create the databases for development and test environment and
+run rackup in the terminal. Visit localhost:9292 to run the bookmark manager.
 
 Run rspec to run the tests.
