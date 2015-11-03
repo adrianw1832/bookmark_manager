@@ -1,3 +1,4 @@
+
 feature 'User sign up' do
   let(:user) { build :user }
   scenario 'I can sign up as a new user' do
@@ -36,7 +37,7 @@ feature 'User signs out' do
   scenario 'while being signed in' do
     user = create(:user)
     sign_in(user)
-    click_button 'Sign out'
+    click_button('Sign out')
     expect(page).to have_content('goodbye!')
     expect(page).not_to have_content("Welcome, #{user.email}")
   end

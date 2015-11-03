@@ -1,15 +1,10 @@
-<h1>Welcome to bookmark manager</h1>
-
-<ul id="links">
-  <%if current_user %>
-  <p>Current links:</p>
-    <% @current_user.links.each do |link| %>
-      <li>
-        Title: <%= link.title %>
-        URL:   <%= link.url   %>
-      </li>
+<%if current_user %>
+  <div id='links-container'>
+    <ul id="links">
+      <% @current_user.links.each do |link| %>
+        <%= partial :link, locals: {link: link} %>
+      <% end %>
     <% end %>
-  <% end %>
-</ul>
-
+  </ul>
+</div>
 
